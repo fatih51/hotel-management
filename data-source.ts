@@ -8,7 +8,7 @@ export const dataSource = new DataSource({
     password: "root",
     database: "hotel-management",
     "entities": [
-        __dirname + "/api/entities/*.entity.ts"
+        __dirname + "/api/entity/*.entity.ts"
     ],
     synchronize: true,
     logging: false

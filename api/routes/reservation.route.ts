@@ -1,8 +1,9 @@
 import express from "express";
 const router = express.Router()
 import { dataSource } from "../../data-source";
-import { Reservation } from "../entities/reservation.entity";
-import { Room } from "../entities/room.entity";
+import { Reservation } from "../entity/reservation.entity";
+import { Room } from "../entity/room.entity";
+import AdminGuard from "../guards/admin.guard";
 
 router.get('/reservations', (req,res)=>{
     let ReservationRepository = dataSource.getRepository(Reservation);
@@ -13,7 +14,7 @@ router.get('/reservations', (req,res)=>{
     })
 })
 
-router.post('/newReservation', (req,res)=>{
+router.post('/newReservation',AdminGuard,(req,res)=>{
     let ReservationRepository = dataSource.getRepository(Reservation);
     let RoomRepository = dataSource.getRepository(Room);
     let reservation = new Reservation();
@@ -34,7 +35,7 @@ router.post('/newReservation', (req,res)=>{
 
 })
 
-router.delete('/deleteReservation/:id', async (req,res)=>{
+router.delete('/deleteReservation/:id',AdminGuard, async (req,res)=>{
     let ReservationRepository = dataSource.getRepository(Reservation);
     let RoomRepository = dataSource.getRepository(Room);
     ReservationRepository
